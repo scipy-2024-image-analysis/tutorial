@@ -1,4 +1,4 @@
-name: image-analysis-23
+name: image-analysis-24
 channels:
   - conda-forge
 dependencies:
@@ -8,13 +8,13 @@ dependencies:
   - jupytext
   - notebook
   - matplotlib
-  - scikit-image=0.21.0
+  - scikit-image=0.22.0
   - jupyter-book=0.15.1
   - pooch=1.7.0
   - scikit-learn=1.2.2
   - ipywidgets=8.0.7
   - seaborn=0.12.2
-  - napari=0.4.18
+  - napari=0.4.19
   - cookiecutter
   - cellpose
   - pip:
