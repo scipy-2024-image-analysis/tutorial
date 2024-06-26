@@ -21,8 +21,9 @@ unstuck!
 ## Instructors
 
 The instructors for this workshop are
-- Juan Nunez-Iglesias
-- Kira Evans
+- Jordão Bragantini
+- Erick Martins Ratamero
+- Stefan van der Walt
 - Lars Grüter
 
 
