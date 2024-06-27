@@ -94,7 +94,7 @@ as well and you can skip to the next section.
 2. We use an environment to encapsulate the Python tools used for this workshop.
    This ensures that the requirements for this workshop do not interfere with
    your other Python projects. To create the environment (named
-   `image-analysis-24`) and install Python 3.10 in it, enter the following command:
+   `image-analysis-24`) and install Python 3.12 in it, enter the following command:
 
     ```bash
     conda env create -f environment.yml
@@ -137,7 +137,7 @@ follow the installation instructions below.
 2. Create your environment and install `napari` from `conda-forge`
 
    ```bash
-   conda create -y -n image-analysis-24 -c conda-forge python=3.10 napari
+   conda create -y -n image-analysis-24 -c conda-forge python=3.12 napari pyqt
    ```
 
 3. Then, after creation:
