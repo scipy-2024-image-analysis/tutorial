@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Image analysis and visualization in Python with scikit-image, napari, and friends
-author: Juan Nunez-Iglesias, Kira Evans, Lars Grüter, and previous contributors
+author: Jordão Bragantini, Erick Martins Ratamero, Stéfan van der Walt, Lars Grüter, and previous contributors
 logo: logo.ico
 
 # Only build files in the table of contents.
@@ -20,7 +20,7 @@ execute:
 # Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
-    targetname: image-analysis-23.tex
+    targetname: image-analysis-24.tex
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
@@ -28,7 +28,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/scipy-2023-image-analysis/tutorial  # Online location of your book
+  url: https://github.com/scipy-2024-image-analysis/tutorial  # Online location of your book
   branch: main  # Which branch of the repository should be used when creating links (optional)
   path_to_book: "tutorial"  # A path to your book's folder, relative to the repository root.
 

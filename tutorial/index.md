@@ -8,7 +8,7 @@ fundamentals of working with images in scientific Python. The tutorial will be
 split into four parts, of about 45 minutes each, plus breaks.
 
 Use the sidebar to navigate to the materials, and
-[fork this repo](https://github.com/scipy-2023-image-analysis/tutorial) if
+[fork this repo](https://github.com/scipy-2024-image-analysis/tutorial) if
 you want to create your own workshop.
 
 ```{tip}
@@ -21,8 +21,9 @@ unstuck!
 ## Instructors
 
 The instructors for this workshop are
-- Juan Nunez-Iglesias
-- Kira Evans
+- Jordão Bragantini
+- Erick Martins Ratamero
+- Stefan van der Walt
 - Lars Grüter
 
 
@@ -37,5 +38,5 @@ if they need it.
 ## Pre-tutorial setup
 
 So that we can best utilize our time together, please [download this
-repository](https://github.com/scipy-2023-image-analysis/tutorial#readme), then
+repository](https://github.com/scipy-2024-image-analysis/tutorial#readme), then
 [install the required dependencies](install-dependencies).
