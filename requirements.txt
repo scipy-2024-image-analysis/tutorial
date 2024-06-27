@@ -11,5 +11,4 @@ seaborn==0.13.2
 napari==0.4.19.post1
 pyqt5
 cookiecutter
-cellpose
 napari-animation

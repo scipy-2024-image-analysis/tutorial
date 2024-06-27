@@ -16,5 +16,4 @@ dependencies:
   - napari=0.4.19.post1
   - napari-animation
   - cookiecutter
-  - cellpose
   - pyqt
