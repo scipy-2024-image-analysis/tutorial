@@ -23,7 +23,7 @@ as well and you can skip to the next section.
    download the OS X x86_64 version.*
     - Windows: `Miniforge3-Windows-x86_64`
     - Mac with Intel processor: `Miniforge3-MacOSX-x86_64`
-    - Mac with M1 ("Apple silicon"): `Miniforge3-MacOSX-x86_64`
+    - Mac with M1 ("Apple silicon"): `Miniforge3-MacOSX-arm64`
     - Linux with an Intel processor: `Miniforge3-Linux-x86_64`
 3. Once you have downloaded miniforge installer, run it to install Python.
     - **Windows**
