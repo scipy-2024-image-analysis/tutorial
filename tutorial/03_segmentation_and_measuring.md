@@ -18,7 +18,7 @@ kernelspec:
 %config InlineBackend.figure_format = 'retina'
 ```
 
-# Segmentation
+# Part 3: Segmentation
 
 --------------
 

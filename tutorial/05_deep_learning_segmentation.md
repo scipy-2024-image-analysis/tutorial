@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# What about deep learning
+# Part 5: What about deep learning
 
 Deep learning-based segmentation is getting extremely good, so why learn "the
 classics"? A few reasons:

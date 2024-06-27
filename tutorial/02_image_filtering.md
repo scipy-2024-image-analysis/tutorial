@@ -20,7 +20,7 @@ kernelspec:
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
-# Image filtering
+# Part 2: Image filtering
 
 +++ {"slideshow": {"slide_type": "notes"}}
 
