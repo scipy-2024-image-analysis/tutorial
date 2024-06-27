@@ -40,6 +40,7 @@ Here is a very simple image and segmentation, taken from [this scikit-image gall
 
 ```{code-cell} ipython3
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import ndimage as ndi
 
 import napari
