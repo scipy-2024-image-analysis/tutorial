@@ -18,12 +18,10 @@ as well and you can skip to the next section.
 1. In your web browser, navigate to the
    [miniforge page](https://github.com/conda-forge/miniforge). 
 2. Scroll down to the "Miniforge3" header of the "Downloads" section. Click the
-   link to download the appropriate version for your operating system. *Note
-   that even if you have a new Apple computer with an M1 processor, you should
-   download the OS X x86_64 version.*
+   link to download the appropriate version for your operating system.
     - Windows: `Miniforge3-Windows-x86_64`
-    - Mac with Intel processor: `Miniforge3-MacOSX-x86_64`
-    - Mac with M1 ("Apple silicon"): `Miniforge3-MacOSX-arm64`
+    - Mac with Intel processor (x86): `Miniforge3-MacOSX-x86_64`
+    - Mac with M1, M2, etc. (arm64, Apple silicon): `Miniforge3-MacOSX-arm64`
     - Linux with an Intel processor: `Miniforge3-Linux-x86_64`
 3. Once you have downloaded miniforge installer, run it to install Python.
     - **Windows**
@@ -51,7 +49,7 @@ as well and you can skip to the next section.
             bash Miniforge3-MacOSX-x86_64.sh
             ```
   
-           On an Apple Silicon (M1, M2, etc.) machine, enter:
+           On an Apple silicon (M1, M2, etc.) machine, enter:
              ```bash
              bash Miniforge3-MacOSX-arm64.sh
              ```
