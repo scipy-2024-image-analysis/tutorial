@@ -21,10 +21,11 @@ unstuck!
 ## Instructors
 
 The instructors for this workshop are
-- Stefan van der Walt
 - Lars Grüter
+- Stefan van der Walt
 - Jordão Bragantini
 - Erick Martins Ratamero
+- Peter Sobolewski
 
 
 ## Goals
