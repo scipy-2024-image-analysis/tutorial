@@ -39,7 +39,9 @@ Computationally, segmentations are most often represented as images, of the same
 Here is a very simple image and segmentation, taken from [this scikit-image gallery example](https://scikit-image.org/docs/dev/auto_examples/segmentation/plot_watershed.html#sphx-glr-auto-examples-segmentation-plot-watershed-py):
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
 import numpy as np
+
 from scipy import ndimage as ndi
 
 import napari
