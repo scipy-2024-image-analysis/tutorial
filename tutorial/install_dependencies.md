@@ -44,15 +44,22 @@ as well and you can skip to the next section.
 
         3. Execute the installer with the command below. You can use your arrow
            keys to scroll up and down to read it/agree to it.
+     
+           On an Intel (x86) machine, enter:
 
             ```bash
-            bash Miniforge3-MacOSX-x86_64.sh -b
+            bash Miniforge3-MacOSX-x86_64.sh
             ```
+  
+           On an Apple Silicon (M1, M2, etc.) machine, enter:
+             ```bash
+             bash Miniforge3-MacOSX-arm64.sh
+             ```
 
-        4. To verify that your installation worked, close your Terminal window
+        5. To verify that your installation worked, close your Terminal window
            and open a new one. You should see `(base)` to the left of your
            prompt.
-        5. Finally, initialize miniforge with the command below. This makes sure
+        6. Finally, initialize miniforge with the command below. This makes sure
            that your terminal is set up correctly for your python installation.
 
             ```bash
