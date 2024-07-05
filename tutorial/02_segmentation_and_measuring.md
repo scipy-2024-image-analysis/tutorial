@@ -99,6 +99,26 @@ labels_as_image_layer = viewer.add_image(
 )
 ```
 
+Unfortuntely, unlike other jupyter widgets, napari is not embedded inside the jupyter notebook.
+This is because the graphical parts of napari are written in [Qt](https://www.qt.io/), making it hard to embed on the web.
+
+Instead, we can take a screenshot of the current state of napari viewer and embed that in the notebook. 
+This can be useful for teaching or sharing purposes where you might want to share key steps in an 
+analysis which makes use of interactive components.
+
+To do this, we use the `nbscreenshot` utility function
+
+```{code-cell} ipython3
+from napari.utils import nbscreenshot
+
+nbscreenshot(viewer)
+```
+
+```{note}
+Unfortunately, in contrast with the real napari viewer, these screenshots won't be interactive!
+```
+
+
 ### Exercise 0: play with the napari viewer
 
 - zoom with scroll, pan with click and drag
@@ -154,8 +174,6 @@ viewer, (membrane_layer, nuclei_layer) = napari.imshow(
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-
-from napari.utils.notebook_display import nbscreenshot
 
 viewer.dims.ndisplay = 3
 viewer.camera.angles = (-30, 25, 120)
