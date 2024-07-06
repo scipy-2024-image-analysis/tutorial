@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.6
+    jupytext_version: 1.14.7
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -20,7 +20,7 @@ kernelspec:
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
-# Image filtering
+# Part 2: Image filtering
 
 +++ {"slideshow": {"slide_type": "notes"}}
 
@@ -235,6 +235,16 @@ Look up the documentation of `scipy.ndimage.convolve`. Apply the same convolutio
 
 ```{code-cell} ipython3
 # Solution here
+import scipy as sp
+# from scipy.ndimage import convolve
+
+smoothed_with_scipy = sp.ndimage.convolve(noisy_signal, mean_kernel11, mode="reflect")
+
+fig, ax = plt.subplots()
+ax.plot(smooth_signal11same, label="padding with zeros")
+ax.plot(smoothed_with_scipy, label="mode reflect")
+ax.legend()
+fig
 ```
 
 +++ {"slideshow": {"slide_type": "slide"}}
@@ -751,6 +761,10 @@ ax.set_ylim((sidelen - 1, 0))
 
 ```{code-cell} ipython3
 # Solution here
+profile = kernel[:, kernel.shape[1] // 2]
+
+fig, ax = plt.subplots()
+ax.plot(profile)
 ```
 
 +++ {"slideshow": {"slide_type": "slide"}}
@@ -801,10 +815,26 @@ vertical_kernel.shape
 
 ```{code-cell} ipython3
 # Solution here
+
+horiz_kernel = vertical_kernel.T
+
+gradient_horiz = ndi.correlate(pixelated.astype(float),
+                               horiz_kernel)
+
+fig, ax = plt.subplots(ncols=2)
+ax[0].imshow(gradient_vertical, cmap="gray");
+im = ax[1].imshow(gradient_horiz, cmap="gray");
+fig.colorbar(im)
 ```
 
 ```{code-cell} ipython3
 # Solution here
+
+gradient = np.sqrt(gradient_vertical**2 + gradient_horiz**2)
+
+fig, ax = plt.subplots()
+im = ax.imshow(gradient, cmap="gray");
+fig.colorbar(im)
 ```
 
 +++ {"slideshow": {"slide_type": "slide"}}
@@ -885,6 +915,27 @@ Can we use machine learning to find a 3x3 convolutional filter that recovers thi
 
 ```{code-cell} ipython3
 # Solution here
+import skimage as ski
+
+windowed = ski.util.view_as_windows(image, (3, 3))
+assert windowed.shape == (510, 510, 3, 3)
+X = windowed.reshape(510**2, 3**2)
+
+# With view_as_windows, border pixels are never at the center
+# of a window, remove them
+y = target[1:-1, 1:-1].reshape(510**2)
+
+
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(solver="liblinear")
+model.fit(X, y)
+trained_kernel = model.coef_
+trained_kernel = trained_kernel.reshape((3, 3,))
+
+# Scale so that top-left is 1
+trained_kernel /= trained_kernel[0, 0]
+trained_kernel
 ```
 
 ---

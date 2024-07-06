@@ -18,7 +18,7 @@ kernelspec:
 %config InlineBackend.figure_format = 'retina'
 ```
 
-# Segmentation
+# Part 3: Segmentation
 
 --------------
 
@@ -39,8 +39,8 @@ Computationally, segmentations are most often represented as images, of the same
 Here is a very simple image and segmentation, taken from [this scikit-image gallery example](https://scikit-image.org/docs/dev/auto_examples/segmentation/plot_watershed.html#sphx-glr-auto-examples-segmentation-plot-watershed-py):
 
 ```{code-cell} ipython3
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import ndimage as ndi
 
 import napari
@@ -92,8 +92,6 @@ To look at images and associated data, *napari* provides additional functionalit
 Here's how to look at the same images with napari:
 
 ```{code-cell} ipython3
-import napari
-
 viewer = napari.Viewer()
 image_layer = viewer.add_image(image)
 labels_layer = viewer.add_labels(labels)
@@ -106,7 +104,7 @@ labels_as_image_layer = viewer.add_image(
 
 - zoom with scroll, pan with click and drag
 - try clicking on the 👁️ icon on each layer in the layer list to make them invisible or visible again
-- ~~try alt-clicking on the icon: this makes every other layer invisible~~
+- try alt-clicking on the icon: this makes every other layer invisible
 - try changing the opacity, colormap, or interpolation on a layer
 - try turning on "grid mode", from the group of buttons at the bottom-left of the viewer.
 - *select* the labels layer, click on the paintbrush tool, and tweak the segmentation where the two labels meet.
@@ -140,10 +138,6 @@ np.max(cells3d)
 The pixel spacing in this dataset is 0.29µm in the z (leading!) axis, and 0.26µm in the x and y axes.
 
 ```{code-cell} ipython3
-data.cells3d?
-```
-
-```{code-cell} ipython3
 spacing = np.array([0.29, 0.26, 0.26])
 ```
 
@@ -155,7 +149,7 @@ viewer, (membrane_layer, nuclei_layer) = napari.imshow(
     channel_axis=1,  # remember, Python uses 0-based indexing!
     scale=spacing,
     name=['membranes', 'nuclei'],
-#     ndisplay=3,
+    ndisplay=3,
 )
 ```
 
@@ -207,22 +201,10 @@ nbscreenshot(viewer)
 Different thresholding algorithms produce different results. [Otsu's method](https://en.wikipedia.org/wiki/Otsu%27s_method) and [Li's minimum cross entropy threshold](https://scikit-image.org/docs/dev/auto_examples/developers/plot_threshold_li.html) are two common algorithms. Below, we use Li. You can use `skimage.filters.threshold_<TAB>` to find different thresholding methods.
 
 ```{code-cell} ipython3
-from scipy import ndimage as ndi
-
 denoised = ndi.median_filter(nuclei, size=3)
 ```
 
 ```{code-cell} ipython3
-from skimage import filters
-```
-
-```{code-cell} ipython3
-filters.threshold_mean?
-```
-
-```{code-cell} ipython3
-from skimage import filters
-
 li_thresholded = denoised > filters.threshold_li(denoised)
 ```
 
@@ -370,30 +352,6 @@ Try to improve the segmentation to assign one point for each nucleus. Some ideas
 
 ```{code-cell} ipython3
 # Solution here
-from skimage.feature import peak_local_max
-
-dt_smoothed = filters.gaussian(transformed, sigma=5)
-peaks = peak_local_max(dt_smoothed, min_distance=5)
-
-pts_layer = viewer.add_points(
-    peaks,
-    name='sean points',
-    scale=spacing,
-    size=4,
-    n_dimensional=True,  # points have 3D "extent"
-)
-```
-
-```{code-cell} ipython3
-pts_layer = viewer.layers['sean points']
-```
-
-```{code-cell} ipython3
-points_data = pts_layer.data
-```
-
-```{code-cell} ipython3
-points_data
 ```
 
 ### Mixing manual annotation and algorithms
@@ -470,7 +428,7 @@ Once you have marked all the points, you can grab the data back, and make a mark
 ```{code-cell} ipython3
 from skimage import segmentation, util
 
-marker_locations = pts_layer.data
+marker_locations = points.data
 
 
 markers = util.label_points(marker_locations, nuclei.shape)
@@ -524,15 +482,6 @@ segmented_padded = np.pad(
 interior_labels = segmentation.clear_border(segmented_padded)[1:-1]
 ```
 
-```{code-cell} ipython3
-viewer.add_labels(
-    interior_labels,
-    scale=spacing,
-    blending='translucent_no_depth',
-    name='clear_borders',
-)
-```
-
 `skimage.measure.regionprops` automatically measures many labeled image features. Optionally, an `intensity_image` can be supplied and intensity features are extracted per object. It's good practice to make measurements on the original image.
 
 Not all properties are supported for 3D data. Below we build a list of supported and unsupported 3D measurements.
@@ -577,11 +526,7 @@ info_table = pd.DataFrame(
         intensity_image=nuclei,
         properties=['label', 'slice', 'area', 'mean_intensity', 'solidity'],
     )
-).set_index('label', drop=False)
-```
-
-```{code-cell} ipython3
-info_table.set_index?
+).set_index('label')
 ```
 
 ```{code-cell} ipython3
@@ -605,15 +550,7 @@ We can see that the mitotic nucleus is a clear outlier from the others in terms 
 The "area" property above is actually the volume of the region, measured in voxels. Add a new column to your dataframe, `'area_um3'`, containing the volume in µm&sup3;. *Hint: remember the voxel spacing we noted at the start of the tutorial. You only need pandas to do this.*
 
 ```{code-cell} ipython3
-µm3_per_pixel = np.product(spacing)
-```
-
-```{code-cell} ipython3
-info_table['area_um3'] = info_table['area'] * µm3_per_pixel
-```
-
-```{code-cell} ipython3
-info_table.head()
+# Solution here
 ```
 
 ### Exercise 3: displaying regionprops (or other values)
@@ -621,23 +558,5 @@ info_table.head()
 Now that you have segmented cells, (or even with just the nuclei), use [`skimage.util.map_array`](https://scikit-image.org/docs/dev/api/skimage.util.html#skimage.util.map_array) to display a volume of the value of a regionprop (say, 'solidity' of the cells) on top of the segments.
 
 ```{code-cell} ipython3
-from skimage.util import map_array
-
-map_array?
-```
-
-```{code-cell} ipython3
-info_table.head()
-```
-
-```{code-cell} ipython3
-feature_image = map_array(
-    interior_labels,
-    np.asarray(info_table['label']),
-    np.asarray(info_table['area'])
-)
-```
-
-```{code-cell} ipython3
-viewer.add_image(feature_image, scale=spacing)
+# Solution here
 ```
