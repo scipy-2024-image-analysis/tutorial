@@ -5,8 +5,8 @@ format: jb-book
 root: index
 chapters:
   - file: install_dependencies
-  - file: 00_images_are_arrays
-  - file: 01_image_filtering
-  - file: 02_segmentation_and_measuring
-  - file: 03_adv0_make_a_plugin
-  - file: 04_deep_learning_segmentation
+  - file: 01_images_are_arrays
+  - file: 02_image_filtering
+  - file: 03_segmentation_and_measuring
+  - file: 04_adv0_make_a_plugin
+  - file: 05_deep_learning_segmentation

@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.7
+    jupytext_version: 1.16.2
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -18,7 +18,7 @@ kernelspec:
 %config InlineBackend.figure_format = 'retina'
 ```
 
-# Segmentation
+# Part 3: Segmentation
 
 --------------
 
@@ -39,8 +39,8 @@ Computationally, segmentations are most often represented as images, of the same
 Here is a very simple image and segmentation, taken from [this scikit-image gallery example](https://scikit-image.org/docs/dev/auto_examples/segmentation/plot_watershed.html#sphx-glr-auto-examples-segmentation-plot-watershed-py):
 
 ```{code-cell} ipython3
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import ndimage as ndi
 
 import napari

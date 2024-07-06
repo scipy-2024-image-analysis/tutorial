@@ -1,4 +1,4 @@
-# Creating a napari plugin
+# Part 4: Creating a napari plugin
 
 ## Overview
 

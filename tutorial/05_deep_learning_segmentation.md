@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# What about deep learning
+# Part 5: What about deep learning
 
 Deep learning-based segmentation is getting extremely good, so why learn "the
 classics"? A few reasons:
@@ -26,7 +26,19 @@ extra bells and whistles.
 To see what we mean, let's try out a state of the art tool for segmentation of
 cellular images.
 
-### Exercise: cellpose (2D)
+## Exercise: cellpose (2D)
+
+````{warning}
+To run this exercise, you need to install an additional dependency either via 
+```bash
+conda install cellpose
+```
+or
+```bash
+pip install cellpose
+```
+depending on your chosen environment.
+````
 
 Cellpose is a deep-learning based segmentation tool for images of cells. It's
 outstanding at segmenting 2D images, so you should try it on 2D datasets from

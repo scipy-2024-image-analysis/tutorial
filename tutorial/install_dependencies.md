@@ -1,5 +1,5 @@
 (install-dependencies)=
-# Install Python and dependencies
+# Part 0: Install Python and dependencies
 
 ```{tip}
 If you have any issues with installation, head over to our Zulip servers where we can help you get
@@ -23,7 +23,7 @@ as well and you can skip to the next section.
    download the OS X x86_64 version.*
     - Windows: `Miniforge3-Windows-x86_64`
     - Mac with Intel processor: `Miniforge3-MacOSX-x86_64`
-    - Mac with M1 ("Apple silicon"): `Miniforge3-MacOSX-x86_64`
+    - Mac with M1 ("Apple silicon"): `Miniforge3-MacOSX-arm64`
     - Linux with an Intel processor: `Miniforge3-Linux-x86_64`
 3. Once you have downloaded miniforge installer, run it to install Python.
     - **Windows**
@@ -94,7 +94,7 @@ as well and you can skip to the next section.
 2. We use an environment to encapsulate the Python tools used for this workshop.
    This ensures that the requirements for this workshop do not interfere with
    your other Python projects. To create the environment (named
-   `image-analysis-23`) and install Python 3.10 in it, enter the following command:
+   `image-analysis-24`) and install Python 3.12 in it, enter the following command:
 
     ```bash
     conda env create -f environment.yml
@@ -103,11 +103,11 @@ as well and you can skip to the next section.
 3. Once the environment setup has finished, activate the environment:
 
     ```bash
-    conda activate image-analysis-23
+    conda activate image-analysis-24
     ```
 
     If you successfully activated the environment, you should now see
-   `(image-analysis-23)` to the left of your command prompt.
+   `(image-analysis-24)` to the left of your command prompt.
 
 4. Test that your notebook installation is working. We will be using notebooks
    for interactive analysis. Enter the command below and it should launch the
@@ -124,26 +124,26 @@ Sometimes, `napari` installation can fail on an M1 Mac due to mismatching
 dependencies on `pip`.
 
 If you get an error above, or can't launch `napari` after
-installation, you should try to delete your `image-analysis-23` environment, and
+installation, you should try to delete your `image-analysis-24` environment, and
 follow the installation instructions below.
 
-1. Delete your `image-analysis-23` environment
+1. Delete your `image-analysis-24` environment
 
    ```bash
    conda activate base
-   conda env remove -n image-analysis-23
+   conda env remove -n image-analysis-24
    ```
 
 2. Create your environment and install `napari` from `conda-forge`
 
    ```bash
-   conda create -y -n image-analysis-23 -c conda-forge python=3.10 napari
+   conda create -y -n image-analysis-24 -c conda-forge python=3.12 napari pyqt
    ```
 
 3. Then, after creation:
 
    ```bash
-   conda activate image-analysis-23
+   conda activate image-analysis-24
    conda env update -f environment.yml
    ```
 ````
