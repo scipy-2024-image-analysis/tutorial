@@ -101,9 +101,10 @@ labels_as_image_layer = viewer.add_image(
 ```
 
 Unfortuntely, unlike other jupyter widgets, napari is not embedded inside the jupyter notebook.
-This is because the graphical parts of napari are written in [Qt](https://www.qt.io/), making it hard to embed on the web.
+This is because the graphical parts of napari are written in [Qt](https://www.qt.io/), making it 
+hard to embed on the web.
 
-Instead, we can take a screenshot of the current state of napari viewer and embed that in the notebook. 
+However, we can take a screenshot of the current state of napari viewer and embed that in the notebook. 
 This can be useful for teaching or sharing purposes where you might want to share key steps in an 
 analysis which makes use of interactive components.
 
