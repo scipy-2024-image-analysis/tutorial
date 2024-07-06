@@ -54,10 +54,10 @@ as well and you can skip to the next section.
              bash Miniforge3-MacOSX-arm64.sh
              ```
 
-        5. To verify that your installation worked, close your Terminal window
+        4. To verify that your installation worked, close your Terminal window
            and open a new one. You should see `(base)` to the left of your
            prompt.
-        6. Finally, initialize miniforge with the command below. This makes sure
+        5. Finally, initialize miniforge with the command below. This makes sure
            that your terminal is set up correctly for your python installation.
 
             ```bash
