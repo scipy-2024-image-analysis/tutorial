@@ -9,15 +9,8 @@ If you have not then you can download the notebooks as follows:
 
 ### Cloning via git
 To clone the repository containing the tutorial materials to your computer, open
-your Terminal and navigate to the folder where you will download the course
-materials into. We recommend cloning the materials into your Documents folder,
-but you can choose another suitable location. 
-
- ```bash
- cd ~/Documents
- ```
-
-Then, clone the repository. This will download all of the files necessary for
+your command line and navigate to the folder where you will download the course
+materials into. Then, clone the repository. This will download all of the files necessary for
 this tutorial.
 
  ```bash

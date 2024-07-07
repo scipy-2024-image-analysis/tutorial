@@ -89,22 +89,13 @@ as well and you can skip to the next section.
 If you cloned the workshop repository, then you already have everything you
  need to set up the tutorial environment, including the notebooks in the
   `tutorial` subfolder. You can skip to the next section.  
-If you havn't cloned the repository, then at a minimum you will need the 
-  [conda environment file](https://github.com/scipy-2024-image-analysis/tutorial/raw/main/environment.yml) to set up the environment.
-You can also download the complete respository, with notebooks, as follows:  
+If you have not, then you download the complete repository, with notebooks, as follows:  
 
 ### Cloning via git
 To clone the repository containing the tutorial materials to your computer, open
-your Terminal and navigate to the folder where you will download the course
-materials into. We recommend cloning the materials into your Documents folder,
-but you can choose another suitable location. 
-
- ```bash
- cd ~/Documents
- ```
-
-Then, clone the repository. This will download all of the files necessary for
-this tutorial.
+your command line and navigate to the folder where you will download the course
+materials into. Then, clone the repository. This will download all of the files 
+necessary for this tutorial.
 
  ```bash
  git clone https://github.com/scipy-2024-image-analysis/tutorial
