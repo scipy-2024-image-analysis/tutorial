@@ -1,4 +1,4 @@
-# Launching the Jupyter notebooks
+# Part 0.2: Launching the Jupyter notebooks
 
 The materials on this website are actually the tutorial notebooks. We encourage you
 to follow along with the workshop in a fresh, blank notebook. However, if you

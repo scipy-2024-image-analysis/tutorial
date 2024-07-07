@@ -5,6 +5,7 @@ format: jb-book
 root: index
 chapters:
   - file: install_dependencies
+  - file: notebook_setup
   - file: 01_images_are_arrays
   - file: 02_image_filtering
   - file: 03_segmentation_and_measuring

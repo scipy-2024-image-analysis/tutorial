@@ -1,5 +1,5 @@
 (install-dependencies)=
-# Part 0: Install Python and dependencies
+# Part 0.1: Install Python and dependencies
 
 ```{tip}
 If you have any issues with installation, head over to our Zulip servers where we can help you get
@@ -84,6 +84,36 @@ as well and you can skip to the next section.
             ```bash
             conda init
             ```
+
+## Get the tutorial repository materials
+If you cloned the workshop repository, then you already have everything you
+ need to set up the tutorial environment, including the notebooks in the
+  `tutorial` subfolder. At a minimum you will need the 
+  [conda environment file](https://github.com/scipy-2024-image-analysis/tutorial/raw/main/environment.yml).
+If you have not then you can download the respository as follows:  
+
+### Cloning via git
+To clone the repository containing the tutorial materials to your computer, open
+your Terminal and navigate to the folder where you will download the course
+materials into. We recommend cloning the materials into your Documents folder,
+but you can choose another suitable location. 
+
+ ```bash
+ cd ~/Documents
+ ```
+
+Then, clone the repository. This will download all of the files necessary for
+this tutorial.
+
+ ```bash
+ git clone https://github.com/scipy-2024-image-analysis/tutorial
+ ```
+
+### Downloading a .zip file
+To download the notebooks as a .zip file using this link:  
+https://github.com/scipy-2024-image-analysis/tutorial/archive/refs/heads/main.zip 
+Then, using your file browser, navigate to the downloaded file, unzip it (optionally to 
+a different location on your computer), and navigate to the contents of the folder `scipy-2024-image-analysis`.
 
 ## Setting up your environment
 1. Open your terminal.
