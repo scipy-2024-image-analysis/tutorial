@@ -182,3 +182,48 @@ Some of the libraries take a while to run the first time, so be patient. You
 should see (1) a matplotlib window with three image panels pop up; when you
 close this, (2) a napari window showing the same coins image should show up.
 When you close this, the script should finish without errors.
+
+# Part 0.2: Launching the Jupyter notebooks
+
+The materials on this website are actually the tutorial notebooks. We encourage you
+to follow along with the workshop in a fresh, blank notebook. However, if you
+would like to be able to run the completed notebooks locally, you can use the instructions below.
+
+## Launch the `jupyter lab` application
+
+Navigate to the `tutorial` subdirectory of the
+`tutorial` directory you just cloned or downloaded.
+
+```
+cd <path to repository>/tutorial
+```
+
+Remember to activate the `image-analysis-24` conda environment if you haven't already.
+
+```bash
+conda activate image-analysis-24
+```
+
+To start the Jupyter application, enter:
+
+```bash
+jupyter lab
+```
+
+The Jupyter interface will open in a browser window and you will see the notebooks
+in the file browser on the left.
+
+````{important}
+The notebooks were converted to MyST Markdown files (with a .md extension), to better visualize 
+on GitHub and provide a nice rendered look on the web. To open these workshop notebooks in the 
+Jupyter interface you will need [`jupytext`](https://jupytext.readthedocs.io/en/latest/index.html) 
+in the environment, which was installed as part of `image-analysis-24`. Then, right click 
+the notebook name in the file navigation panel from the Jupyter interface, and click "Open with -> Notebook".
+
+Or, as an alternative you can first convert them to normal `.ipynb` using `jupytext` from the command prompt:
+
+```bash
+jupytext –to ipynb <notebook_file>.md
+```
+
+````
