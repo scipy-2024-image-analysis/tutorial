@@ -1,14 +1,14 @@
-(install-dependencies)=
-# Part 0.1: Install Python and dependencies
+# Part 0: Setup
 
 ```{tip}
-If you have any issues with installation, head over to our Zulip servers where we can help you get
-unstuck!
+If you have any issues with the setup, head over to our Zulip servers where we
+can help you get unstuck!
 - https://skimage.zulipchat.com
 - https://napari.zulipchat.com/
 ```
 
-## Installing Python using conda
+(install-dependencies)=
+## Install Python using conda
 
 In this tutorial, we will install Python via miniforge, a distribution of
 Python based in the [conda package manager](https://docs.conda.io/en/latest/).
@@ -91,7 +91,7 @@ If you cloned the workshop repository, then you already have everything you
   `tutorial` subfolder. You can skip to the next section.  
 If you have not, then you download the complete repository, with notebooks, as follows:  
 
-### Cloning via git
+### Clone via git
 To clone the repository containing the tutorial materials to your computer, open
 your command line and navigate to the folder where you will download the course
 materials into. Then, clone the repository. This will download all of the files 
@@ -101,13 +101,13 @@ necessary for this tutorial.
  git clone https://github.com/scipy-2024-image-analysis/tutorial
  ```
 
-### Downloading a .zip file
+### Or download a .zip file
 To download the notebooks as a .zip file using this link:  
 https://github.com/scipy-2024-image-analysis/tutorial/archive/refs/heads/main.zip 
 Then, using your file browser, navigate to the downloaded file, unzip it (optionally to 
 a different location on your computer), and navigate to the contents of the folder `scipy-2024-image-analysis`.
 
-## Setting up your environment
+## Setup your environment
 1. Open your terminal.
    - **Windows**: Open the "miniforge prompt" from your start menu
    - **Mac OS**: Open Terminal (you can search for it in spotlight - `cmd` +
@@ -170,7 +170,7 @@ follow the installation instructions below.
    ```
 ````
 
-## Checking that your installation works
+## Check that your installation works
 
 If you have installed everything correctly, you should be able to run:
 
@@ -183,13 +183,11 @@ should see (1) a matplotlib window with three image panels pop up; when you
 close this, (2) a napari window showing the same coins image should show up.
 When you close this, the script should finish without errors.
 
-# Part 0.2: Launching the Jupyter notebooks
+## Launch the Jupyter notebooks
 
 The materials on this website are actually the tutorial notebooks. We encourage you
 to follow along with the workshop in a fresh, blank notebook. However, if you
 would like to be able to run the completed notebooks locally, you can use the instructions below.
-
-## Launch the `jupyter lab` application
 
 Navigate to the `tutorial` subdirectory of the
 `tutorial` directory you just cloned or downloaded.
