@@ -1,14 +1,14 @@
-(install-dependencies)=
-# Part 0: Install Python and dependencies
+# Part 0: Setup
 
 ```{tip}
-If you have any issues with installation, head over to our Zulip servers where we can help you get
-unstuck!
+If you have any issues with the setup, head over to our Zulip servers where we
+can help you get unstuck!
 - https://skimage.zulipchat.com
 - https://napari.zulipchat.com/
 ```
 
-## Installing Python using conda
+(install-dependencies)=
+## Install Python using conda
 
 In this tutorial, we will install Python via miniforge, a distribution of
 Python based in the [conda package manager](https://docs.conda.io/en/latest/).
@@ -85,7 +85,29 @@ as well and you can skip to the next section.
             conda init
             ```
 
-## Setting up your environment
+## Get the tutorial repository materials
+If you cloned the workshop repository, then you already have everything you
+ need to set up the tutorial environment, including the notebooks in the
+  `tutorial` subfolder. You can skip to the next section.  
+If you have not, then you download the complete repository, with notebooks, as follows:  
+
+### Clone via git
+To clone the repository containing the tutorial materials to your computer, open
+your command line and navigate to the folder where you will download the course
+materials into. Then, clone the repository. This will download all of the files 
+necessary for this tutorial.
+
+ ```bash
+ git clone https://github.com/scipy-2024-image-analysis/tutorial
+ ```
+
+### Or download a .zip file
+To download the notebooks as a .zip file using this link:  
+https://github.com/scipy-2024-image-analysis/tutorial/archive/refs/heads/main.zip 
+Then, using your file browser, navigate to the downloaded file, unzip it (optionally to 
+a different location on your computer), and navigate to the contents of the folder `scipy-2024-image-analysis`.
+
+## Setup your environment
 1. Open your terminal.
    - **Windows**: Open the "miniforge prompt" from your start menu
    - **Mac OS**: Open Terminal (you can search for it in spotlight - `cmd` +
@@ -148,7 +170,7 @@ follow the installation instructions below.
    ```
 ````
 
-## Checking that your installation works
+## Check that your installation works
 
 If you have installed everything correctly, you should be able to run:
 
@@ -161,10 +183,45 @@ should see (1) a matplotlib window with three image panels pop up; when you
 close this, (2) a napari window showing the same coins image should show up.
 When you close this, the script should finish without errors.
 
-## Running the notebooks
+## Launch the Jupyter notebooks
 
-This tutorial uses Markdown files (with extension ".md") to store jupyter
-notebooks managed by jupytext. Once you have jupytext installed (as per the
-instructions above), the experience is pretty much the same as using a regular
-Jupyter notebook: launch `jupyter notebook` or `jupyter lab`, open this folder,
-and click on each notebook to follow along with the class.
+The materials on this website are actually the tutorial notebooks. We encourage you
+to follow along with the workshop in a fresh, blank notebook. However, if you
+would like to be able to run the completed notebooks locally, you can use the instructions below.
+
+Navigate to the `tutorial` subdirectory of the
+`tutorial` directory you just cloned or downloaded.
+
+```
+cd <path to repository>/tutorial
+```
+
+Remember to activate the `image-analysis-24` conda environment if you haven't already.
+
+```bash
+conda activate image-analysis-24
+```
+
+To start the Jupyter application, enter:
+
+```bash
+jupyter lab
+```
+
+The Jupyter interface will open in a browser window and you will see the notebooks
+in the file browser on the left.
+
+````{important}
+The notebooks were converted to MyST Markdown files (with a .md extension), to better visualize 
+on GitHub and provide a nice rendered look on the web. To open these workshop notebooks in the 
+Jupyter interface you will need [`jupytext`](https://jupytext.readthedocs.io/en/latest/index.html) 
+in the environment, which was installed as part of `image-analysis-24`. Then, right click 
+the notebook name in the file navigation panel from the Jupyter interface, and click "Open with -> Notebook".
+
+Or, as an alternative you can first convert them to normal `.ipynb` using `jupytext` from the command prompt:
+
+```bash
+jupytext –to ipynb <notebook_file>.md
+```
+
+````

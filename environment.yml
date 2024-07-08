@@ -5,6 +5,7 @@ dependencies:
   - python=3.12
   - jupyterlab
   - jupytext
+  - jupyterlab-myst
   - notebook
   - matplotlib
   - scikit-image=0.24.0
