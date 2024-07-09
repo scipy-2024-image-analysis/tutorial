@@ -745,7 +745,7 @@ Plot the profile of the gaussian kernel at its midpoint, i.e. the values under t
 fig, ax = plt.subplots()
 
 ax.imshow(kernel, cmap='gray')
-ax.vlines(22, -100, 100, color='C9')
+ax.vlines(kernel.shape[1] // 2, -100, 100, color='C9')
 ax.set_ylim((sidelen - 1, 0))
 ```
 
@@ -876,7 +876,7 @@ imshow_all(image, target, titles=['source', 'target'])
 
 Can we use machine learning to find a 3x3 convolutional filter that recovers this target?
 
-- use `skimage.util.view_as_windows` and `np.reshape` to view the image as a set of (approximately) `npixels` 3x3 patches. (Hint: why is it only approximate? Think of `mode=valid` convolutions.)
+- use `skimage.util.view_as_windows` to view the image as a set of (approximately) `npixels` 3x3 patches. (Hint: why is it only approximate? Think of `mode=valid` convolutions.)
 - use `np.reshape` again to see it as `npixels` "linear" patches of 9 pixels.
 - Now you have an `(npixels, 9)` "feature" matrix, `X`.
 - Use slicing and `np.ravel` to get an `npixels`-length array of target values.
