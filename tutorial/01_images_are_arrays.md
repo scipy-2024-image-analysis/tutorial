@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.7
+    jupytext_version: 1.16.2
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -19,6 +19,22 @@ kernelspec:
 %config InlineBackend.figure_format = 'retina'
 ```
 
+```{code-cell} ipython3
+import numpy as np
+print(f'NumPy {np.__version__}')
+
+import skimage as ski
+print(f'skimage {ski.__version__}')
+```
+
+*Note: NumPy 2.0 was released recently. scikit-image 0.24 is compatible.*
+
++++
+
+⚠️ Note the import convention above: `import skimage as ski`. If you forget to import `skimage`, all the examples below will fail to execute!
+
++++
+
 # Part 1: Images are numpy arrays
 
 +++
@@ -30,10 +46,15 @@ Let's see how to build a grayscale image as a 2D array:
 ```{code-cell} ipython3
 import numpy as np
 from matplotlib import pyplot as plt
+```
 
+```{code-cell} ipython3
 rng = np.random.default_rng(44)
 random_image = rng.random([500, 500])
+random_image.shape, random_image.dtype
+```
 
+```{code-cell} ipython3
 plt.imshow(random_image, cmap='gray')
 plt.colorbar();
 ```
@@ -41,9 +62,7 @@ plt.colorbar();
 The same holds for "real-world" images:
 
 ```{code-cell} ipython3
-from skimage import data
-
-coins = data.coins()
+coins = ski.data.coins()
 
 print('Type:', type(coins))
 print('dtype:', coins.dtype)
@@ -55,7 +74,7 @@ plt.imshow(coins, cmap='gray');
 A color image is a 3D array, where the last dimension has size 3 and represents the red, green, and blue channels:
 
 ```{code-cell} ipython3
-cat = data.chelsea()
+cat = ski.data.chelsea()
 print("Shape:", cat.shape)
 print("Values min/max:", cat.min(), cat.max())
 
@@ -87,10 +106,8 @@ Images can also include transparent regions by adding a 4th channel, called an *
 ## Displaying images using matplotlib
 
 ```{code-cell} ipython3
-from skimage import data
-
-img0 = data.chelsea()
-img1 = data.rocket()
+img0 = ski.data.chelsea()
+img1 = ski.data.rocket()
 ```
 
 ```{code-cell} ipython3
@@ -125,7 +142,7 @@ In literature, one finds different conventions for representing image values:
   0 - 1     where  0 is black, 1 is white
 ```
 
-``scikit-image`` supports both conventions--the choice is determined by the
+``scikit-image`` supports both conventions—the choice is determined by the
 data-type of the array.
 
 E.g., here, I generate two valid images:
@@ -142,51 +159,33 @@ ax0.imshow(linear0, cmap='gray')
 ax1.imshow(linear1, cmap='gray');
 ```
 
-The library is designed in such a way that any data-type is allowed as input,
-as long as the range is correct (0-1 for floating point images, 0-255 for unsigned bytes,
-0-65535 for unsigned 16-bit integers).
+When we first designed the library, we always *assumed* that floating type images go from 0-1, and unsigned bytes from 0 to 255.
 
-+++
+For floating point images, we're moving away from that design, because often you want to represent quantities that don't fit that mold: e.g., you may be looking at temperature or rainfall data.
 
-You can convert images between different representations by using ``img_as_float``, ``img_as_ubyte``, etc.:
+If you're just working with standard imaging data, continue to use 0-1.
+
+When loading integer images (e.g., 0-255), you'll often want to convert those to floating point (0-1). You may do that using `img_as_float`:
 
 ```{code-cell} ipython3
-from skimage import img_as_float, img_as_ubyte
+cat = ski.data.chelsea()
+print(cat.dtype, cat.min(), cat.max())
 
-image = data.chelsea()
+cat_float = ski.util.img_as_float(cat)
+print(cat_float.dtype, cat_float.min(), cat_float.max())
 
-image_ubyte = img_as_ubyte(image)
-image_float = img_as_float(image)
-
-print("type, min, max:", image_ubyte.dtype, image_ubyte.min(), image_ubyte.max())
-print("type, min, max:", image_float.dtype, image_float.min(), image_float.max())
 print()
 print("231/255 =", 231/255.)
 ```
 
-Your code would then typically look like this:
-
-```python
-def my_function(any_image):
-   float_image = img_as_float(any_image)
-   # Proceed, knowing image is in [0, 1]
-```
-
-We recommend using the floating point representation, given that
-``scikit-image`` mostly uses that format internally.
-
-+++
-
 ## Image I/O
 
-Mostly, we won't be using input images from the scikit-image example data sets.  Those images are typically stored in JPEG or PNG format.  Since scikit-image operates on NumPy arrays, *any* image reader library that provides arrays will do.  Options include imageio, matplotlib, pillow, etc.
+Mostly, we won't be using images from the scikit-image example data sets, but images stored on disk in JPEG, PNG, or TIFF format.  Since scikit-image operates on NumPy arrays, *any* image reader library that returns arrays will do.  We recommend `imageio`, but `matplotlib`, `pillow`, etc. also work.
 
-scikit-image conveniently wraps many of these in the `io` submodule, and will use whichever of the libraries mentioned above are installed:
+scikit-image provides a convenience wrapper around `image`, in the form of the `skimage.io` submodule:
 
 ```{code-cell} ipython3
-from skimage import io
-
-image = io.imread('./data/balloon.jpg')
+image = ski.io.imread('./data/balloon.jpg')
 
 print(type(image))
 print(image.dtype)
@@ -196,10 +195,10 @@ print(image.min(), image.max())
 plt.imshow(image);
 ```
 
-We also have the ability to load multiple images, or multi-layer TIFF images:
+We also have the ability to load multiple images from a folder:
 
 ```{code-cell} ipython3
-ic = io.ImageCollection('./data/*.png:./data/*.jpg')
+ic = ski.io.ImageCollection('./*.png:./data/*.png:./data/*.jpg')
 
 print('Type:', type(ic))
 
@@ -209,21 +208,32 @@ ic.files
 ```{code-cell} ipython3
 import os
 
-f, axes = plt.subplots(nrows=3, ncols=len(ic) // 3 + 1)
+def plot_collection(ic : ski.io.ImageCollection):
+    """Display images in an ImageCollection in a grid.
 
-# subplots returns the figure and an array of axes
-# we use `axes.ravel()` to turn these into a list
-axes = axes.ravel()
+    """
+    f, axes = plt.subplots(ncols=3, nrows=int(np.ceil(len(ic) / 3)))
 
-for ax in axes:
-    ax.axis('off')
+    # subplots returns the figure and an array of axes
+    # we use `axes.ravel()` to turn these into a list
+    axes = axes.ravel()
 
-for i, image in enumerate(ic):
-    axes[i].imshow(image, cmap='gray')
-    axes[i].set_title(os.path.basename(ic.files[i]))
+    for ax in axes:
+        # Hide axis labels
+        ax.axis('off')
+
+    for i, image in enumerate(ic):
+        axes[i].imshow(image, cmap='gray')
+        axes[i].set_title(os.path.basename(ic.files[i]))
     
-plt.tight_layout()
+    plt.tight_layout()
 ```
+
+```{code-cell} ipython3
+plot_collection(ic)
+```
+
++++ {"jp-MarkdownHeadingCollapsed": true}
 
 ### Aside: `enumerate`
 
@@ -240,9 +250,9 @@ for i, animal in enumerate(animals):
 
 ## <span class="exercize">Exercise 1: draw the letter H</span>
 
-Define a function that takes as input an RGB image and a pair of coordinates (row, column), and returns a copy with a green letter H overlaid at those coordinates. The coordinates point to the top-left corner of the H.
+Define a function that takes as input an RGB image (shape `MxNx3`) and a pair of coordinates, `(row, column)`, and returns a copy with a green letter H overlaid at those coordinates. The coordinates point to the top-left corner of the H.
 
-The arms and strut of the H should have a width of 3 pixels, and the H itself should have a height of 24 pixels and width of 20 pixels.
+The arms and strut of the H should have a thickness of 3 pixels, and the H itself should have a height of 24 pixels and width of 20 pixels.
 
 Start with the following template:
 
@@ -262,14 +272,14 @@ Test your function like so:
 ```{code-cell} ipython3
 :tags: [remove-output]
 
-cat = data.chelsea()
+cat = ski.data.chelsea()
 cat_H = draw_H(cat, (50, -50))
 plt.imshow(cat_H);
 ```
 
 ## <span class="exercize">Exercise 2: visualizing RGB channels</span>
 
-Display the different color channels of the image along (each as a gray-scale image).  Start with the following template:
+Display the different color channels of the image (each as a gray-scale image).  Start with the following template:
 
 ```{code-cell} ipython3
 :tags: [raises-exception, remove-output]
@@ -280,9 +290,9 @@ image = plt.imread('./data/Bells-Beach.jpg')
 
 # --- assign each color channel to a different variable ---
 
-r = ... # FIXME: grab channel from image...
-g = ... # FIXME
-b = ... # FIXME
+r = ...  # FIXME: grab channel from image...
+g = ...  # FIXME
+b = ...  # FIXME
 
 # --- display the image and r, g, b channels ---
 f, axes = plt.subplots(1, 4, figsize=(16, 5))
@@ -310,24 +320,23 @@ ax_color.set_title('all channels');
 Now, take a look at the following R, G, and B channels.  How would their combination look? (Write some code to confirm your intuition.)
 
 ```{code-cell} ipython3
-from skimage import draw
-
 red = np.zeros((300, 300))
 green = np.zeros((300, 300))
 blue = np.zeros((300, 300))
 
-r, c = draw.disk(center=(100, 100), radius=100)
+r, c = ski.draw.disk(center=(100, 100), radius=100)
 red[r, c] = 1
 
-r, c = draw.disk(center=(100, 200), radius=100)
+r, c = ski.draw.disk(center=(100, 200), radius=100)
 green[r, c] = 1
 
-r, c = draw.disk(center=(200, 150), radius=100)
+r, c = ski.draw.disk(center=(200, 150), radius=100)
 blue[r, c] = 1
 
 f, axes = plt.subplots(1, 3)
-for (ax, channel) in zip(axes, [red, green, blue]):
+for (ax, channel, name) in zip(axes, [red, green, blue], ['red', 'green', 'blue']):
     ax.imshow(channel, cmap='gray')
+    ax.set_title(f'{name} channel')
     ax.axis('off')
 ```
 
@@ -339,21 +348,19 @@ $$
 Y = 0.2126R + 0.7152G + 0.0722B
 $$
 
-Use Python 3.5's matrix multiplication, `@`, to convert an RGB image to a grayscale luminance image according to the formula above.
+Use Python 3.5's matrix multiplication, `@`, to convert an RGB image to a grayscale (luminance) image according to the formula above.
 
 Compare your results to that obtained with `skimage.color.rgb2gray`.
 
-Change the coefficients to 1/3 (i.e., take the mean of the red, green, and blue channels, to see how that approach compares with `rgb2gray`).
+Change the coefficients above to be 1/3 (i.e., take the mean of the red, green, and blue channels), to see how that approach compares with `rgb2gray`.
 
 ```{code-cell} ipython3
 :tags: [raises-exception, remove-output]
 
-from skimage import color, img_as_float
+image = ski.img_as_float(ski.io.imread('./data/balloon.jpg'))
 
-image = img_as_float(io.imread('./data/balloon.jpg'))
-
-gray = color.rgb2gray(image)
-my_gray = ...  # FIXME
+gray = ski.color.rgb2gray(image)
+my_gray = ...  # FIXME; compute R, G, B average here
 
 # --- display the results ---
 f, (ax0, ax1) = plt.subplots(1, 2, figsize=(10, 6))
