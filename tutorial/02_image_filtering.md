@@ -745,7 +745,7 @@ Plot the profile of the gaussian kernel at its midpoint, i.e. the values under t
 fig, ax = plt.subplots()
 
 ax.imshow(kernel, cmap='gray')
-ax.vlines(22, -100, 100, color='C9')
+ax.vlines(kernel.shape[1] // 2, -100, 100, color='C9')
 ax.set_ylim((sidelen - 1, 0))
 ```
 
