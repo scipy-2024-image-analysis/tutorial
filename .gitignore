@@ -1,3 +1,6 @@
+# Generated notebooks
+*.ipynb
+
 .ipynb_checkpoints
 tutorial/_build/
 
