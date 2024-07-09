@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.7
+    jupytext_version: 1.16.2
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -186,7 +186,7 @@ scikit-image conveniently wraps many of these in the `io` submodule, and will us
 ```{code-cell} ipython3
 from skimage import io
 
-image = io.imread('./data/balloon.jpg')
+image = io.imread('../data/balloon.jpg')
 
 print(type(image))
 print(image.dtype)
@@ -307,7 +307,7 @@ Display the different color channels of the image along (each as a gray-scale im
 
 # --- read in the image ---
 
-image = plt.imread('./data/Bells-Beach.jpg')
+image = plt.imread('../data/Bells-Beach.jpg')
 
 # --- assign each color channel to a different variable ---
 
@@ -384,8 +384,9 @@ Change the coefficients to 1/3 (i.e., take the mean of the red, green, and blue 
 :tags: [raises-exception, remove-output]
 
 from skimage import color, img_as_float
+import skimage as ski
 
-image = img_as_float(io.imread('./data/balloon.jpg'))
+image = img_as_float(ski.io.imread('../data/balloon.jpg'))
 
 gray = color.rgb2gray(image)
 coefficients = [0.2126, 0.7152, 0.0722]

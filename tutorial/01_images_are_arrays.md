@@ -75,6 +75,7 @@ A color image is a 3D array, where the last dimension has size 3 and represents 
 
 ```{code-cell} ipython3
 cat = ski.data.chelsea()
+
 print("Shape:", cat.shape)
 print("Values min/max:", cat.min(), cat.max())
 
@@ -248,7 +249,7 @@ for i, animal in enumerate(animals):
     print('The animal in position {} is {}'.format(i, animal))
 ```
 
-## <span class="exercize">Exercise 1: draw the letter H</span>
+## Exercise 1: draw the letter H
 
 Define a function that takes as input an RGB image (shape `MxNx3`) and a pair of coordinates, `(row, column)`, and returns a copy with a green letter H overlaid at those coordinates. The coordinates point to the top-left corner of the H.
 
