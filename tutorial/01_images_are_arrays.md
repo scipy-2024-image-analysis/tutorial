@@ -199,7 +199,7 @@ plt.imshow(image);
 We also have the ability to load multiple images from a folder:
 
 ```{code-cell} ipython3
-ic = ski.io.ImageCollection('./*.png:./data/*.png:./data/*.jpg')
+ic = ski.io.ImageCollection(['./*.png', './data/*.png', './data/*.jpg'])
 
 print('Type:', type(ic))
 
