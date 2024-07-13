@@ -13,3 +13,4 @@ napari==0.4.19.post1
 pyqt5
 cookiecutter
 napari-animation
+ipympl

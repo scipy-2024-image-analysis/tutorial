@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.6
+    jupytext_version: 1.16.2
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -14,7 +14,7 @@ kernelspec:
 ```{code-cell} ipython3
 :tags: [hide-cell]
 
-%matplotlib inline
+%matplotlib widget
 %config InlineBackend.figure_format = 'retina'
 ```
 
@@ -140,8 +140,10 @@ print('smooth_signal3 and smooth_signal3p are equal:',
 def convolve_demo(signal, kernel):
     ksize = len(kernel)
     convolved = np.correlate(signal, kernel)
+    fig, ax = plt.subplots()
+    
     def filter_step(i):
-        fig, ax = plt.subplots()
+        ax.clear()
         ax.plot(signal, label='signal')
         ax.plot(convolved[:i+1], label='convolved')
         ax.legend()
@@ -205,8 +207,10 @@ def convolve_demo_same(signal, kernel):
     padded_signal = np.pad(signal, ksize // 2,
                            mode='constant')
     convolved = np.correlate(padded_signal, kernel)
+    fig, ax = plt.subplots()
+
     def filter_step(i):
-        fig, ax = plt.subplots()
+        ax.clear()
         x = np.arange(-ksize // 2,
                       len(signal) + ksize // 2)
         ax.plot(signal, label='signal')
