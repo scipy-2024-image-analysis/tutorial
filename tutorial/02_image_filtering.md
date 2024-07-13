@@ -18,6 +18,16 @@ kernelspec:
 %config InlineBackend.figure_format = 'retina'
 ```
 
+```{code-cell} ipython3
+---
+slideshow:
+  slide_type: skip
+---
+import matplotlib.pyplot as plt
+import numpy as np
+import skimage as ski
+```
+
 +++ {"slideshow": {"slide_type": "slide"}}
 
 # Part 2: Image filtering
@@ -29,15 +39,6 @@ Filtering is one of the most basic and common image operations in image processi
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 ## Local filtering
-
-```{code-cell} ipython3
----
-slideshow:
-  slide_type: skip
----
-import matplotlib.pyplot as plt
-import numpy as np
-```
 
 +++ {"slideshow": {"slide_type": "notes"}}
 
@@ -508,7 +509,6 @@ Here's a small demo of convolution in action.
 #--------------------------------------------------------------------------
 #  Convolution Demo
 #--------------------------------------------------------------------------
-from skimage import color
 from scipy import ndimage as ndi
 from matplotlib import patches
 
@@ -518,19 +518,21 @@ def mean_filter_demo(image, vmax=1):
 
     image_cache = []
 
+    fig = plt.figure(figsize=(10, 5))
+    
     def mean_filter_step(i_step):
         while i_step >= len(image_cache):
             filtered = image if i_step == 0 else image_cache[-1][-1][-1]
             filtered = filtered.copy()
 
             (i, j), mask, subimage = next(iter_kernel_and_subimage)
-            filter_overlay = color.label2rgb(mask, image, bg_label=0,
+            filter_overlay = ski.color.label2rgb(mask, image, bg_label=0,
                                              colors=('cyan', 'red'))
             filtered[i, j] = np.sum(mean_factor * subimage)
             image_cache.append(((i, j), (filter_overlay, filtered)))
 
         (i, j), images = image_cache[i_step]
-        fig, axes = plt.subplots(1, len(images), figsize=(10, 5))
+        axes = fig.subplots(1, len(images))
 
         for ax, imc in zip(axes, images):
             ax.imshow(imc, vmax=vmax, cmap="gray")
@@ -592,9 +594,7 @@ Let's consider a real image now. It'll be easier to see some of the filtering we
 slideshow:
   slide_type: fragment
 ---
-from skimage import data
-
-image = data.camera()
+image = ski.data.camera()
 pixelated = image[::10, ::10]
 fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(10, 5))
 ax0.imshow(image, cmap="gray")
@@ -610,10 +610,8 @@ Here we use a step of 10, giving us every tenth column and every tenth row of th
 We are actually going to be using the pattern of plotting multiple images side by side quite often, so we are going to make the following helper function:
 
 ```{code-cell} ipython3
-from skimage import img_as_float
-
 def imshow_all(*images, titles=None):
-    images = [img_as_float(img) for img in images]
+    images = [ski.util.img_as_float(img) for img in images]
 
     if titles is None:
         titles = [''] * len(images)
@@ -672,11 +670,9 @@ slideshow:
   slide_type: notes
 ---
 # Rename module so we don't shadow the builtin function
-from skimage import filters
-
 smooth_mean = ndi.correlate(bright_square, mean_kernel)
 sigma = 1
-smooth = filters.gaussian(bright_square, sigma)
+smooth = ski.filters.gaussian(bright_square, sigma)
 imshow_all(bright_square, smooth_mean, smooth,
            titles=['original', 'result of mean filter', 'result of gaussian filter'])
 ```
@@ -692,11 +688,10 @@ For a real image, we get the following:
 slideshow:
   slide_type: fragment
 ---
-from skimage import img_as_float
 # The Gaussian filter returns a float image, regardless of input.
 # Cast to float so the images have comparable intensity ranges.
-pixelated_float = img_as_float(pixelated)
-smooth = filters.gaussian(pixelated_float, sigma=1)
+pixelated_float = ski.util.img_as_float(pixelated)
+smooth = ski.filters.gaussian(pixelated_float, sigma=1)
 imshow_all(pixelated_float, smooth)
 ```
 
@@ -711,8 +706,8 @@ slideshow:
 ---
 size = 20
 structuring_element = np.ones((3*size, 3*size))
-smooth_mean = filters.rank.mean(image, structuring_element)
-smooth_gaussian = filters.gaussian(image, size)
+smooth_mean = ski.filters.rank.mean(image, structuring_element)
+smooth_gaussian = ski.filters.gaussian(image, size)
 titles = ['mean', 'gaussian']
 imshow_all(smooth_mean, smooth_gaussian, titles=titles)
 ```
@@ -736,7 +731,7 @@ sidelen = 45
 sigma = (sidelen - 1) // 2 // 4
 spot = np.zeros((sidelen, sidelen), dtype=float)
 spot[sidelen // 2, sidelen // 2] = 1
-kernel = filters.gaussian(spot, sigma=sigma)
+kernel = ski.filters.gaussian(spot, sigma=sigma)
 
 imshow_all(spot, kernel / np.max(kernel))
 ```
@@ -829,7 +824,7 @@ The Sobel filter, the most commonly used edge filter, should look pretty similar
 slideshow:
   slide_type: fragment
 ---
-imshow_all(bright_square, filters.sobel(bright_square))
+imshow_all(bright_square, ski.filters.sobel(bright_square))
 ```
 
 +++ {"slideshow": {"slide_type": "notes"}}
@@ -843,7 +838,7 @@ Like any derivative, noise can have a strong impact on the result:
 slideshow:
   slide_type: fragment
 ---
-pixelated_gradient = filters.sobel(pixelated)
+pixelated_gradient = ski.filters.sobel(pixelated)
 imshow_all(pixelated, pixelated_gradient)
 ```
 
@@ -856,7 +851,7 @@ Smoothing is often used as a preprocessing step in preparation for feature detec
 slideshow:
   slide_type: fragment
 ---
-gradient = filters.sobel(smooth)
+gradient = ski.filters.sobel(smooth)
 titles = ['gradient before smoothing', 'gradient after smoothing']
 # Scale smoothed gradient up so they're of comparable brightness.
 
@@ -874,7 +869,7 @@ Notice how the edges look more continuous in the smoothed image.
 Let's pretend we have an image and a "ground truth" image of what we want to detect:
 
 ```{code-cell} ipython3
-target = (filters.sobel_h(image) > 0.07)
+target = (ski.filters.sobel_h(image) > 0.07)
 imshow_all(image, target, titles=['source', 'target'])
 ```
 
@@ -912,9 +907,8 @@ The median filter is the classic edge-preserving filter. As the name implies, th
 slideshow:
   slide_type: fragment
 ---
-from skimage.morphology import disk
-neighborhood = disk(radius=1)  # "selem" is often the name used for "structuring element"
-median = filters.rank.median(pixelated, neighborhood)
+neighborhood = ski.morphology.disk(radius=1)  # "selem" is often the name used for "structuring element"
+median = ski.filters.rank.median(pixelated, neighborhood)
 titles = ['image', 'gaussian', 'median']
 imshow_all(pixelated, smooth, median, titles=titles)
 ```
@@ -928,10 +922,10 @@ This difference is more noticeable with a more detailed image.
 slideshow:
   slide_type: fragment
 ---
-neighborhood = disk(10)
-coins = data.coins()
-mean_coin = filters.rank.mean(coins, neighborhood)
-median_coin = filters.rank.median(coins, neighborhood)
+neighborhood = ski.morphology.disk(10)
+coins = ski.data.coins()
+mean_coin = ski.filters.rank.mean(coins, neighborhood)
+median_coin = ski.filters.rank.median(coins, neighborhood)
 titles = ['image', 'mean', 'median']
 imshow_all(coins, mean_coin, median_coin, titles=titles)
 ```
